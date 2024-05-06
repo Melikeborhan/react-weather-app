@@ -1,33 +1,38 @@
-import React from 'react';
-// Doğru ikonu içe aktarın
+import axios from 'axios';
+import React, { useState } from 'react';
 
-const Menu = () => {
+const Menu = ({ setCity }) => {
+  const [search, setSearch] = useState('');
+  const key = "a803e41670adab97e59fd681355c7d94";
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${key}&units=metric`);
+      setCity(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="  text-xl font-extrabold ...">
-
-      <nav className="shadow-2xl ... relative flex flex-wrap items-center justify-between px-2 py-8 bg-gradient-to-r from-cyan-300 to-blue-400">
-        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-
-
-          {/* <button className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none" type="button">
-                <span className="block relative w-6 h-px rounded-sm bg-white"></span>
-                <span className="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
-                <span className="block relative w-6 h-px rounded-sm bg-white mt-1"></span>
-              </button> */}
-
-          <div className="group relative overflow-hidden: lg:flex flex-grow items-center" id="example-navbar-warning" >
-            <ul className="flex flex-col lg:flex-row list-none ml-auto">
-              <li className="nav-item">
-                <a className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75" href="#pablo">HOME</a>
-              </li>
-
-            </ul>
+    <nav className=" shadow-xl relative w-full px-5 py-5 bg-gradient-to-r from-cyan-50 to-blue-100">
+      <div className=" px-4 mx-auto  flex-wrap items-center justify-between mg:">
+        <form onSubmit={e => { e.preventDefault(); handleSearch(); }} mx-8 my-8>
+          <div className="space-x-2 w-full flex justify-center items-center px-10 lg:static">
+            <input
+              className="my-5 px-3 w-[400px] py-3 placeholder-blueGray-300 bg-white rounded text-sm border-0 shadow-2xl outline-blue focus:outline-none focus:ring"
+              type="text"
+              placeholder="Konum giriniz"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Ara
+            </button>
           </div>
-        </div>
-
-      </nav>
-
-    </div>
+        </form>
+      </div>
+    </nav>
   );
 }
 

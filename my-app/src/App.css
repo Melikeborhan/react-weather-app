@@ -37,3 +37,9 @@
     transform: rotate(360deg);
   }
 }
+
+.app {
+  background: url("/src/images/backımg1.jpg") center no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
